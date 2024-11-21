@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discussion App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="container">
+    <h1 class="heading">Discussion Portal</h1>
+
+    <main class="main">
+      <div class="left-panel">
+        <div class="left-panel-top">
+          <p id="new-question">New Question form</p>
+          <input type="text" placeholder="search questions..." id="search-question">
+          <div class="star-container">
+            <img width="32" height="32" src="https://img.icons8.com/windows/32/star--v1.png" alt="star--v1"
+              class="star-icon" />
+          </div>
+        </div>
+
+        <ul class="left-panel-bottom">
+          <!-- <li>
+            <h1 class="subject"></h1>
+            <p class="question"></p>
+          </li> -->
+        </ul>
+        <h1 class="zeroStars">No Question Stars</h1>
+
+      </div>
+
+      <div class="right-panel">
+        <div class="question-container">
+          <h1>Welcome to Discussion Portal</h1>
+          <p class="question-subheading">Enter a subject and question to get started</p>
+
+          <form class="question-form">
+            <input type="text" id="newSubject" placeholder="Subject">
+            <textarea id="newQuestion" cols="30" rows="10" placeholder="Question"></textarea>
+            <button type="submit" class="submitBtn">Submit</button>
+          </form>
+        </div>
+
+        <div class="response-container">
+          <h2 class="view-question-heading">Question</h2>
+
+          <div class="view-question-details">
+            <div class="view-question">
+              <h2 class="view-subject">Subject</h2>
+              <p class="view-curr-question">Question</p>
+            </div>
+            <p id="resolveBtn">Resolve</p>
+          </div>
+
+          <h3 class="view-question-heading">Response</h3>
+          <ul class="view-responses"></ul>
+          <h2 class="view-question-heading view-response-heading">Add Response</h2>
+          <form class="right-panel-response-form">
+            <input type="text" id="name" placeholder="Enter Name">
+            <textarea id="comment" cols="30" rows="10" placeholder="Enter Comment"></textarea>
+            <button type="submit" class="submitBtn">Submit</button>
+          </form>
+        </div>
+      </div>
+    </main>
+  </div>
+
+
+  <script src="index.js"></script>
+</body>
+
+</html>

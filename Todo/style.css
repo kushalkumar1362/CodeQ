@@ -1,0 +1,147 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #1a202c;
+}
+
+.container {
+  width: 100%;
+  height: 100vh;
+  color: white;
+  overflow-y: auto;
+}
+
+.heading {
+  text-align: center;
+  margin: 20px 0px 30px 0px;
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+main form {
+  display: flex;
+}
+
+div #addInput {
+  padding: 10px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  background-color: #2d3748;
+  color: white;
+}
+
+div #addTodo {
+  padding: 10px 30px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border: none;
+  font-size: 1rem;
+  outline: none;
+  cursor: pointer;
+  background-color: #38a169;
+  color: white;
+}
+
+ul {
+  width: 600px;
+  list-style: none;
+  margin-top: 30px;
+  padding: 0;
+}
+
+ul li {
+  background-color: #2d3748;
+  padding: 9px 10px;
+  margin: 15px 0px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  text-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+ul li .todo-data {
+  flex: 1;
+  word-wrap: break-word;
+  background: transparent;
+  font-size: 1rem;
+  color: #fff;
+  border: none;
+  outline: none;
+}
+
+ul li div {
+  display: flex;
+  gap: 10px;
+}
+
+ul button {
+  padding: 0.2em 0.5em;
+  border: 2px solid #38a169;
+  position: relative;
+  overflow: hidden;
+  background-color: transparent;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  transition: .3s;
+  z-index: 1;
+  color: #38a169;
+}
+
+ul li button::before {
+  content: '';
+  width: 0;
+  height: 300%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  background: #38a169;
+  transition: .5s ease;
+  display: block;
+  z-index: -1;
+}
+
+ul li button:hover::before {
+  width: 105%;
+}
+
+ul li button:hover {
+  color: #fff;
+}
+
+ul li input[type="checkbox"] {
+  margin-right: 10px;
+  accent-color: #38a169;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  ul {
+    max-width: 500px;
+  }
+}
+
+@media screen and (max-width: 667px) {
+  ul {
+    max-width: 400px;
+  }
+}
