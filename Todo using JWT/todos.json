@@ -1,0 +1,32 @@
+[
+  {
+    "user": "1",
+    "todos": [
+      {
+        "id": 1732463933176,
+        "todo": "q",
+        "isCompleted": false
+      },
+      {
+        "id": 1732507798947,
+        "todo": "2",
+        "isCompleted": false
+      },
+      {
+        "id": 1732526496049,
+        "todo": "3",
+        "isCompleted": true
+      }
+    ]
+  },
+  {
+    "user": "2",
+    "todos": [
+      {
+        "id": 1732384095479,
+        "todo": "123",
+        "isCompleted": true
+      }
+    ]
+  }
+]

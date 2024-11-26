@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="container">
+    <main>
+      <section id="loginSection">
+        <h2 class="heading">Login</h2>
+        <form id="login-form">
+          <input type="text" id="loginEmail" placeholder="Enter your email" required autofocus>
+          <input type="password" id="loginPassword" placeholder="Enter your password" required>
+          <button type="submit" id="loginButton">Login</button>
+          <p>Don't have an account?
+            <span onclick="showSection('signupSection', 'loginSection')">
+              Sign Up
+            </span>
+          </p>
+        </form>
+      </section>
+
+      <section id="signupSection">
+        <h2 class="heading">Sign Up</h2>
+        <form id="signup-form">
+          <input type="text" id="signupEmail" placeholder="Enter your email" required autofocus>
+          <input type="password" id="signupPassword" placeholder="Enter your password" required>
+          <button type="submit" id="signupButton">Sign Up</button>
+          <p>Already have an account? <span onclick="showSection('loginSection', 'signupSection')">Login</span></p>
+        </form>
+      </section>
+
+      <section id="todoSection" style="display: none;">
+        <header class="heading">Todo</header>
+        <button id="logout">Logout</button>
+        <form class="todo-form">
+          <input type="text" id="addInput" placeholder="Add new todo">
+          <button id="addTodo" type="submit">Add</button>
+        </form>
+        <div class="todo-list">
+          <ul></ul>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+
+</html>
