@@ -7,6 +7,7 @@ const database = require("./config/db.config");
 const routes = require("./routes");
 const path = require('path');
 
+
 /**
  * Load environment variables from .env file
  */
@@ -25,16 +26,24 @@ database.connect();
 /**
  * Middleware
  */
-app.use(express.json());
-app.use(cookieParser());
+const CLIENT_URL = process.env.CLIENT_URL;
+app.use((req, res, next) => {
+  // console.log(req.url, req.method);
+  next();
+})
+
 app.use(
   cors({
-    origin: process.env.CLIENT_URL,
+    origin: CLIENT_URL,
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
+app.use(express.json());
+app.use(cookieParser());
+
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 /**
  * Routing

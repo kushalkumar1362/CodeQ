@@ -62,40 +62,6 @@ exports.addProduct = async (req, res) => {
   }
 };
 
-exports.getProductById = async (req, res) => {
-  const id = req.params.id;
-  try {
-    const product = await Product.findById(id);
-    return res.status(200).json({
-      success: true,
-      product: product
-    });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({
-      success: false,
-      message: error.message,
-    })
-  }
-}
-
-exports.getProduct = async (req, res) => {
-  const id = req.userId;
-  try {
-    const products = await Product.find({ user_id: id });
-    return res.status(200).json({
-      success: true,
-      products: products
-    });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({
-      success: false,
-      message: error.message,
-    })
-  }
-};
-
 exports.getAllProducts = async (req, res) => {
   try {
     const products = await Product.find();
@@ -111,3 +77,65 @@ exports.getAllProducts = async (req, res) => {
     })
   }
 };
+
+exports.getAllCartProductsById = async (req, res) => {
+  try {
+    const { carts } = req.query;
+
+    const products = await Product.find({ _id: { $in: carts?.map(({ id }) => id) } });
+    return res.status(200).json({
+      success: true,
+      products: products
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    })
+  }
+};
+
+
+
+// exports.getProductById = async (req, res) => {
+//   const { id } = req.params;
+
+//   try {
+//     const product = await Product.findById(id);
+
+//     if (!product) {
+//       return res.status(404).json({
+//         success: false,
+//         message: 'Product not found',
+//       });
+//     }
+
+//     return res.status(200).json({
+//       success: true,
+//       product,
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     return res.status(500).json({
+//       success: false,
+//       message: error.message,
+//     });
+//   }
+// }
+
+// exports.getProduct = async (req, res) => {
+//   try {
+//     const products = await Product.find({ user_id: req.userId });
+//     res.status(200).json({
+//       success: true,
+//       products
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({
+//       success: false,
+//       message: error.message
+//     });
+//   }
+// };

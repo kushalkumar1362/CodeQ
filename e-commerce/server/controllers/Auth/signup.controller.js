@@ -33,8 +33,7 @@ const sendLink = async (email) => {
 exports.signup = async (req, res) => {
   try {
     // Extract the request body
-    const { email, password, confirmPassword, name } = req.body;
-
+    const { email, password, confirmPassword, name, currentTab } = req.body;
     // Check if all fields are filled
     if ([name, email, password, confirmPassword].some((field) => !field || field.trim() === "")) {
       return res.status(400).json({
@@ -51,6 +50,7 @@ exports.signup = async (req, res) => {
       });
     }
 
+    let role = currentTab === "Buyer" ? "buyer" : "seller";
     // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -66,6 +66,7 @@ exports.signup = async (req, res) => {
       const hashedPassword = await bcrypt.hash(password, 10);
       existingUser.password = hashedPassword;
       existingUser.name = name;
+      existingUser.role = role;
       await existingUser.save();
     } else {
       // Create a new user
@@ -74,6 +75,7 @@ exports.signup = async (req, res) => {
         email,
         password: hashedPassword,
         name,
+        role: role,
       });
       await newUser.save();
     }

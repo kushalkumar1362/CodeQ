@@ -1,5 +1,20 @@
+const User = require("../../models/user.model");
+
 exports.logout = async (req, res) => {
   try {
+    const id = req.userId;
+
+    const existingUser = await User.findById(id);
+
+    if (!existingUser) {
+      return res.status(400).json({
+        success: false,
+        message: "User does not exist.",
+      });
+    }
+
+    existingUser.isLoggedIn = false;
+    await existingUser.save();
     // Clear the token cookie
     res.clearCookie('token');
     // Return a success message

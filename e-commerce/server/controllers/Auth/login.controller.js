@@ -17,7 +17,7 @@ exports.login = async (req, res) => {
 
     // Find the user by email
     const existingUser = await User.findOne({ email });
-
+    // console.log(existingUser);
     // Check if user exists
     if (!existingUser) {
       return res.status(400).json({
@@ -43,6 +43,9 @@ exports.login = async (req, res) => {
       });
     }
 
+
+    existingUser.isLoggedIn = true;
+    await existingUser.save();
     // Generate JWT token
     const token = jwt.sign({ id: existingUser._id }, process.env.JWT_SECRET, {
       expiresIn: "1d",
@@ -57,8 +60,9 @@ exports.login = async (req, res) => {
     // Send response with token
     res.cookie("token", token, options).status(200).json({
       success: true,
+      ...existingUser._doc,
       token,
-      message: `User Login Success`,
+      message: `User Login Success`
     });
   } catch (error) {
     console.error(error);
@@ -68,3 +72,4 @@ exports.login = async (req, res) => {
     });
   }
 }
+

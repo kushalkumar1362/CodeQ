@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const User = require("../models/user.model");
 
 exports.authMiddleware = async (req, res, next) => {
   const token = req.cookies.token || req.body.token;
@@ -15,6 +16,9 @@ exports.authMiddleware = async (req, res, next) => {
     next();
   } catch (error) {
     if (error.name === "TokenExpiredError") {
+      const existingUser = await User.findById(req.userId);
+      existingUser.isLoggedIn = false;
+      await existingUser.save();
       res.clearCookie('token');
       return res.status(440).json({
         success: false,
