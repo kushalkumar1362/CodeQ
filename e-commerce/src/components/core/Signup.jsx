@@ -19,6 +19,14 @@ const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [currentTab, setCurrentTab] = useState("Buyer");
+  const [confirmPasswordError, setConfirmPasswordError] = useState(false);
+
+  const validations = {
+    hasLowercase: /[a-z]/.test(formData.password),
+    hasUppercase: /[A-Z]/.test(formData.password),
+    hasNumber: /\d/.test(formData.password),
+    hasMinLength: formData.password.length >= 8,
+  };
 
   const togglePassword = () => {
     setShowPassword(!showPassword);
@@ -64,16 +72,36 @@ const Signup = () => {
       ...prev,
       [event.target.name]: event.target.value,
     }));
+    const confirm = event.target.name === "confirmPassword";
+    if (confirm && formData.password !== event.target.value) {
+      setConfirmPasswordError(true);
+    }
+    else {
+      setConfirmPasswordError(false);
+    }
   }
 
   const submitHandler = async (event) => {
     event.preventDefault();
     if (isSubmitting) return;
+
+    if (
+      !validations.hasLowercase ||
+      !validations.hasUppercase ||
+      !validations.hasNumber ||
+      !validations.hasMinLength
+    ) {
+      toast.error("Password is not strong enough");
+      setIsSubmitting(false);
+      return;
+    }
+
     if (formData.password !== formData.confirmPassword) {
       toast.error("Passwords do not match");
       setIsSubmitting(false);
       return;
     }
+
     const SERVER_URL = process.env.REACT_APP_SERVER_URL;
     if (toastId) toast.dismiss(toastId);
 
@@ -109,9 +137,9 @@ const Signup = () => {
       </div>
       <div className='md:w-1/2 max-w-[500px] w-[90%] shadow-[0px_0px_5px_3px_rgba(0,_0,_0,_0.25)] rounded-lg p-8 flex flex-col gap-4 bg-[#fff] absolute top-[16%]'>
 
-        <div className="flex justify-center gap-1 mb-4 bg-[#93d8d3] p-1 rounded-full w-full ">
-          <button className={`w-full px-5 py-2 rounded-full transition-all duration-300 ease-in-out ${currentTab === "Buyer" ? "bg-[#009087] text-white font-semibold" : "text-[#009087]"}`} onClick={() => setCurrentTab("Buyer")}>Buyer</button>
-          <button className={`w-full px-2 py-5 rounded-full transition-all duration-300 ease-in-out ${currentTab === "Seller" ? "bg-[#009087] text-white font-semibold" : "text-[#009087]"}`} onClick={() => setCurrentTab("Seller")}>Seller</button>
+        <div className="flex justify-center gap-1 mb-4 bg-[#93d8d3] p-1 rounded-full w-full border-[1.5px] border-[#009087]">
+          <button className={`w-full px-5 py-2 rounded-full font-semibold transition-all duration-300 ease-in-out ${currentTab === "Buyer" ? "bg-[#009087] text-white animate-fade-left animate-once" : "text-[#009087]"} $`} onClick={() => { setCurrentTab("Buyer") }}>Buyer</button>
+          <button className={`w-full px-5 py-2 rounded-full font-semibold transition-all duration-300 ease-in-out ${currentTab === "Seller" ? "bg-[#009087] text-white animate-fade-right animate-once" : "text-[#009087]"} $`} onClick={() => { setCurrentTab("Seller") }}>Seller</button>
         </div>
         <h2 className='text-3xl text-primary font-bold text-center'>Signup</h2>
 
@@ -137,6 +165,7 @@ const Signup = () => {
                     )}
                   </div>
                 )}
+
                 {input.name === "confirmPassword" && (
                   <div className='absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer'>
                     {showConfirmPassword ? (
@@ -147,6 +176,31 @@ const Signup = () => {
                   </div>
                 )}
               </div>
+              {input.name === "password" && (
+                <ul className="list-none p-0">
+                  <li className={`${validations.hasLowercase ? "text-green-600" : "text-red-500"}`}>
+                    {validations.hasLowercase ? "✔" : "✖"} At least <span className='font-semibold'>one lowercase letter</span>
+                  </li>
+                  <li className={`${validations.hasUppercase ? "text-green-600" : "text-red-500"}`}>
+                    {validations.hasUppercase ? "✔" : "✖"} At least <span className='font-semibold'>one uppercase letter</span>
+                  </li>
+                  <li className={`${validations.hasNumber ? "text-green-600" : "text-red-500"}`}>
+                    {validations.hasNumber ? "✔" : "✖"} At least <span className='font-semibold'>one number</span>
+                  </li>
+                  <li className={`${validations.hasMinLength ? "text-green-600" : "text-red-500"}`}>
+                    {validations.hasMinLength ? "✔" : "✖"} Minimum <span className='font-semibold'>8 characters</span>
+                  </li>
+                </ul>
+              )}
+
+              {input.name === "confirmPassword" && (
+                <div className='p-0'>
+                  {confirmPasswordError && (
+                    <span className='text-red-500 text-sm'>Password and Confirm password is not matched</span>
+                  )
+                  }
+                </div>
+              )}
             </div>
           ))}
           <button className='button' disabled={isSubmitting}>Signup</button>
@@ -163,5 +217,4 @@ const Signup = () => {
 };
 
 export default Signup;
-
 

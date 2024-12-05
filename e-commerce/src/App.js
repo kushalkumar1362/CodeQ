@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { add } from './redux/Product/cartSlice';
 import { loginSuccess } from './redux/Auth/authSlice';
+import PrivateRoute from './utils/PrivateRoute';
 
 import {
   Home,
@@ -35,7 +36,9 @@ const App = () => {
           })
         }
       } catch (error) {
-        console.error(error);
+        if (error.response.status !== 401) {
+          console.error(error);
+        }
       }
     };
     fetchUser();
@@ -46,11 +49,15 @@ const App = () => {
     { path: "/login", element: <Login /> },
     { path: "/signup", element: <Signup /> },
     { path: "/verify/:token", element: <VerifyUser /> },
-    { path: "/cart", element: <Cart /> },
-    { path: "/add-new-product", element: <AddProduct /> },
     { path: "/forgot-password", element: <ForgotPassword /> },
     { path: '/update-password/:id', element: <UpdatePassword /> },
   ]
+
+  const privateRoutes = [
+    { path: "/cart", element: <Cart /> },
+    { path: "/add-new-product", element: <AddProduct /> },
+  ]
+
   return (
     <div className="scrollbar-thumb-[#009087] scrollbar-track-[#201F44]">
       <div className="scrollbar-thin h-screen overflow-y-scroll">
@@ -59,12 +66,24 @@ const App = () => {
         </div>
         <Routes>
           {publicRoutes.map(({ path, element }, index) => (
-            <Route key={index} path={path} element={element} />
+            <Route
+              key={index}
+              path={path}
+              element={element} />
+          ))}
+
+          {privateRoutes.map(({ path, element }, index) => (
+            <Route
+              key={index}
+              path={path}
+              element={<PrivateRoute >{element}</PrivateRoute>}
+            />
           ))}
         </Routes>
+
+
       </div >
     </div>
-
   );
 };
 

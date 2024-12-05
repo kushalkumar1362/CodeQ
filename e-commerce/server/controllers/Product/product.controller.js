@@ -62,6 +62,10 @@ exports.addProduct = async (req, res) => {
   }
 };
 
+exports.updateProduct = async (req, res) => {
+
+}
+
 exports.getAllProducts = async (req, res) => {
   try {
     const products = await Product.find();
@@ -95,8 +99,6 @@ exports.getAllCartProductsById = async (req, res) => {
     })
   }
 };
-
-
 
 // exports.getProductById = async (req, res) => {
 //   const { id } = req.params;

@@ -30,6 +30,10 @@ function UpdatePassword() {
 
   async function handleOnSubmit(e) {
     e.preventDefault()
+    if (password !== confirmPassword) {
+      toast.error("Password and Confirm password is not matched");
+      return;
+    }
     const token = location.pathname.split("/").at(-1);
     setLoading(true);
     try {
@@ -44,7 +48,7 @@ function UpdatePassword() {
     }
     catch (error) {
       console.log("RESET PASSWORD TOKEN Error", error);
-      toast.error("Unable to reset password");
+      toast.error(error?.response?.data?.message);
     }
     setLoading(false);
   }

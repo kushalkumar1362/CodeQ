@@ -54,7 +54,7 @@ const ProductDetails = ({ product, setShowModal }) => {
       const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/add-to-cart`, data, { withCredentials: true });
 
       if (response.data.success) {
-        dispatch(add({ id: product._id }));
+        dispatch(add({ id: product._id, quantity: 1 }));
       }
     } catch (error) {
       console.error(error);
@@ -105,7 +105,7 @@ const ProductDetails = ({ product, setShowModal }) => {
                           key={image}
                           src={`${SERVER_URL}/uploads/${image?.split('\\').pop()}`}
                           alt={product.product_name}
-                          className="lg:w-[58px] w-[100px] object-contain p-[3px] hover:scale-125 hover:border-2 hover:border-[#009087] transition duration-300 ease-in-out cursor-pointer"
+                          className="lg:w-[58px] w-[100px] object-contain p-[3px] hover:scale-125 hover:border-2 hover:border-[#009087] transition duration-300 ease-in-out cursor-pointer animate-fade-in animate-delay-1000"
                           onClick={() => setCurrImage(image)}
                         />
                       )

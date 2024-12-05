@@ -5,24 +5,33 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { add, remove } from '../../redux/Product/cartSlice';
 import { LightTooltip } from '../../utils/toltip';
-
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 const ProductCard = ({ product }) => {
 
   const SERVER_URL = process.env.REACT_APP_SERVER_URL;
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const carts = useSelector(state => state.cart);
   // const userId = useSelector(state => state.auth.userId);
   const role = useSelector(state => state.auth.role);
+  const { isLoggedIn } = useSelector((state) => state.auth);
 
   const handleOpen = () => setShowModal((cur) => !cur);
   const addToCart = async () => {
+    if (!isLoggedIn) {
+      toast("Please Login to add a item in the cart")
+      navigate('/login');
+      return;
+    }
     try {
       const data = { productId: product._id, quantity: 1 };
       const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/add-to-cart`, data, { withCredentials: true });
 
       if (response.data.success) {
-        dispatch(add({ id: product._id }));
+        dispatch(add({ id: product._id, quantity: 1 }));
       }
     } catch (error) {
       console.error(error);
@@ -46,11 +55,14 @@ const ProductCard = ({ product }) => {
       <div className="relative flex flex-col bg-white shadow-sm border border-slate-200 rounded-lg w-auto h-auto p-6 mt-11">
         <LightTooltip title="View Details" placement="top-end" arrow>
           <div className='cursor-pointer lg:h-[280px]' onClick={handleOpen}>
+            <h3 className="text-2xl font-semibold mb-3 text-primary">
+              {product.product_name}
+            </h3>
             <img
               src={`${SERVER_URL}/uploads/${product.product_images[0].split('\\').pop()}`}
               loading='lazy'
               alt={product.product_name}
-              className="h-[60%] w-full rounded-md"
+              className="h-[70%] w-full rounded-md"
             />
             <div>
               {product.product_quantity <= 0 && (
@@ -58,9 +70,6 @@ const ProductCard = ({ product }) => {
                   <p className="text-xl font-bold text-white uppercase">Out of Stock</p>
                 </div>
               )}
-              <h3 className="text-lg font-semibold mt-6 text-primary">
-                {product.product_name}
-              </h3>
               <p className="text-sm text-gray-600 mt-2 line-clamp-2">
                 {product.product_description.length > 50
                   ? product.product_description.slice(0, 100) + '...'
@@ -77,7 +86,7 @@ const ProductCard = ({ product }) => {
               ₹{product.product_price.toLocaleString()}
             </span>
 
-            {(role === "buyer") && <div className="flex">
+            {(role === "buyer" || !isLoggedIn) && <div className="flex">
               {
                 carts.find(cart => cart.id === product._id) ?
                   <button className="button" onClick={removeFromCart}>

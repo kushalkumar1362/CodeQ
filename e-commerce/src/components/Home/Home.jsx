@@ -8,6 +8,8 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [products, setProducts] = useState([]);
   const SERVER_URL = process.env.REACT_APP_SERVER_URL;
+
+
   const getAllProducts = useCallback(async () => {
     setIsLoading(true);
     try {
@@ -30,7 +32,7 @@ const Home = () => {
   }, [getAllProducts]);
 
   return (
-    <div className='container mx-auto px-4 py-12 flex flex-col items-center justify-center min-h-screen relative'>
+    <div className='container mx-auto px-4 py-12 flex flex-col items-center justify-center min-h-screen relative scroll-smooth scrollbar-track-current'>
       {isLoading ? (
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
           <Spinner />
