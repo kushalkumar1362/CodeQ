@@ -147,7 +147,7 @@ exports.updateProduct = async (req, res) => {
 
 exports.getAllProducts = async (req, res) => {
   try {
-    const products = await Product.find();
+    const products = await Product.find().sort({ createdAt: -1 });
     return res.status(200).json({
       success: true,
       products: products
@@ -157,7 +157,7 @@ exports.getAllProducts = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: error.message,
-    })
+    });
   }
 };
 
