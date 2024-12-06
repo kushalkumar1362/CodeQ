@@ -63,7 +63,6 @@ const Login = () => {
           email: "",
           password: "",
         });
-        console.log(response.data)
         dispatch(loginSuccess({ name: response.data.name, email: response.data.email, userId: response.data._id, role: response.data.role }));
         response.data.carts.forEach((cart) => {
           dispatch(add({

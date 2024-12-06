@@ -56,6 +56,7 @@ const App = () => {
   const privateRoutes = [
     { path: "/cart", element: <Cart /> },
     { path: "/add-new-product", element: <AddProduct /> },
+    { path: "/edit-product/:id", element: <AddProduct /> },
   ]
 
   return (

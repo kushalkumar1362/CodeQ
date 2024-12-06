@@ -47,7 +47,7 @@ exports.login = async (req, res) => {
     existingUser.isLoggedIn = true;
     await existingUser.save();
     // Generate JWT token
-    const token = jwt.sign({ id: existingUser._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: existingUser._id, role: existingUser.role }, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
 

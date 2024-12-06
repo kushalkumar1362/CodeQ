@@ -43,7 +43,6 @@ exports.addProduct = async (req, res) => {
       product_quantity,
       product_category,
       product_images: imagePaths,
-      user: id,
     });
 
     await product.save();
@@ -63,7 +62,87 @@ exports.addProduct = async (req, res) => {
 };
 
 exports.updateProduct = async (req, res) => {
+  const id = req.userId;
+  try {
 
+    const fileTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+    const {
+      product_name,
+      product_description,
+      product_price,
+      product_quantity,
+      product_category,
+      product_id
+    } = req.body;
+
+    if (!product_id || !product_name || !product_description || !product_price || !product_quantity || !product_category) {
+      return res.status(400).json({
+        success: false,
+        message: "All Field is required."
+      });
+    }
+
+    const files = req.files;
+    if (!files || files.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "No file uploaded."
+      });
+    }
+
+    if (files.length >= 6) {
+      return res.status(400).json({
+        success: false,
+        message: "You can upload max 5 file"
+      });
+    }
+
+    const imagePaths = [];
+    for (const file of files) {
+      if (!fileTypes.includes(file.mimetype)) {
+        return res.status(400).json({
+          success: false,
+          message: `Invalid file type. Only PNG, JPEG, and JPG files are allowed. You uploaded a ${file.mimetype}.`
+        });
+      }
+
+      const filePath = path.join(__dirname, '..', '..', 'uploads', file.filename);
+      imagePaths.push(filePath);
+    }
+
+    const product = await Product.findByIdAndUpdate(
+      product_id,
+      {
+        user_id: id,
+        product_name,
+        product_description,
+        product_price,
+        product_quantity,
+        product_category,
+        product_images: imagePaths,
+      },
+      { new: true }
+    );
+
+    if (!product) {
+      return res.status(404).json({
+        success: false,
+        message: "Product not found."
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Product Update Successfully.",
+      product: product
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    })
+  }
 }
 
 exports.getAllProducts = async (req, res) => {

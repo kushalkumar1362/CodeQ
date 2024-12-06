@@ -12,7 +12,9 @@ exports.authMiddleware = async (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log(decoded);
     req.userId = decoded.id;
+    req.role = decoded.role;
     next();
   } catch (error) {
     if (error.name === "TokenExpiredError") {
@@ -31,5 +33,43 @@ exports.authMiddleware = async (req, res, next) => {
     });
   }
 };
+
+exports.isBuyer = async (req, res, next) => {
+  try {
+    const role = req.role;
+    if (role !== "buyer") {
+      return res.status(401).json({
+        success: false,
+        message: 'This is a protected route for Sellers only',
+      });
+    }
+    next();
+  }
+  catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: 'User role cannot be verified, please try again'
+    })
+  }
+}
+
+exports.isSeller = async (req, res, next) => {
+  try {
+    const role = req.role;
+    if (role !== "seller") {
+      return res.status(401).json({
+        success: false,
+        message: 'This is a protected route for Buyers only',
+      });
+    }
+    next();
+  }
+  catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: 'User role cannot be verified, please try again'
+    })
+  }
+}
 
 

@@ -33,7 +33,7 @@ async function sendVerificationEmail(email, token) {
     // const mailResponse =
     await mailSender(
       email,
-      "File Extractor - Verification Email",
+      "E-Commerce - Verification Email",
       `<p>Please click the link below to verify your email address:</p>
       <p><a href="${url}">Click here</a></p>
       <p>If you did not request this email, please disregard it.</p>`

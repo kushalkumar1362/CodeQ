@@ -4,17 +4,23 @@ import axios from 'axios';
 import { add, remove } from '../../redux/Product/cartSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { RiSubtractFill, RiAddFill } from "react-icons/ri";
+import { MdModeEditOutline } from "react-icons/md";
+import { RxCross2 } from "react-icons/rx";
+import { LightTooltip } from "../../utils/toltip";
+import { useNavigate } from 'react-router-dom';
 
 const ProductDetails = ({ product, setShowModal }) => {
   const SERVER_URL = process.env.REACT_APP_SERVER_URL;
-
   const images = useMemo(() => product.product_images, [product.product_images]);
+
+  const navigate = useNavigate();
   const [currIndex, setCurrIndex] = useState(0);
   const [currImage, setCurrImage] = useState(images[0]);
-  const carts = useSelector(state => state.cart);
-  // const userId = useSelector(state => state.auth.userId);
-  const role = useSelector(state => state.auth.role);
 
+
+  const carts = useSelector(state => state.cart);
+  const role = useSelector(state => state.auth.role);
+  const userId = useSelector(state => state.auth.userId);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -73,6 +79,10 @@ const ProductDetails = ({ product, setShowModal }) => {
     }
   }
 
+  const editHandler = () => {
+    navigate(`/edit-product/${product._id}`, { state: { prevData: product } });
+  }
+
   return (
     <div className="w-screen container mx-auto px-6 flex h-full">
       <div className='justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none'>
@@ -80,14 +90,27 @@ const ProductDetails = ({ product, setShowModal }) => {
           <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
             <div className="flex items-start justify-between p-4 border-b border-solid border-blueGray-200 rounded-t">
               <h2 className="text-3xl font-bold text-primary">{product.product_name}</h2>
-              <button
-                className="ml-auto bg-transparent border-0 opacity-100 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                onClick={() => setShowModal(false)}
-              >
-                <span className="bg-transparent text-red-500 opacity-100 h-6 w-6 text-2xl block outline-none focus:outline-none ">
-                  ×
-                </span>
-              </button>
+              {(product.user_id === userId) && <LightTooltip title="Edit" placement="top-start" arrow>
+                <button
+                  className="ml-auto bg-transparent border-0 opacity-100 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                  onClick={editHandler}
+                >
+                  <span className={`bg-transparent text-primary opacity-100 h-6 w-6 text-2xl block outline-none focus:outline-none`}>
+                    <MdModeEditOutline />
+                  </span>
+                </button>
+              </LightTooltip>}
+
+              <LightTooltip title="Close" placement="top-start" arrow>
+                <button
+                  className="ml-6 bg-transparent border-0 opacity-100 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                  onClick={() => setShowModal(false)}
+                >
+                  <span className="bg-transparent text-red-500 opacity-100 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                    <RxCross2 />
+                  </span>
+                </button>
+              </LightTooltip>
             </div>
 
             <div className="relative p-6 flex flex-col lg:flex-row text-lg leading-relaxed gap-4 max-h-[280px] overflow-y-scroll scrollbar-none">
@@ -127,7 +150,7 @@ const ProductDetails = ({ product, setShowModal }) => {
               </div>
             </div>
 
-            {(role === "buyer") && <div className="flex items-center justify-end p-4 border-t border-solid border-blueGray-200 rounded-b mt-4">
+            {(role === "buyer") && <div className="flex items-center justify-end p-4 border-t border-solid border-blue-300 rounded-b mt-4">
               {(currIndex !== -1) ? (
                 <div className='flex flex-row gap-8'>
                   <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">

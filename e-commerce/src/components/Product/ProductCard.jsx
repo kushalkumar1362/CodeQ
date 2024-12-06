@@ -62,15 +62,15 @@ const ProductCard = ({ product }) => {
               src={`${SERVER_URL}/uploads/${product.product_images[0].split('\\').pop()}`}
               loading='lazy'
               alt={product.product_name}
-              className="h-[70%] w-full rounded-md"
+              className="h-[70%] w-full rounded-md object-contain"
             />
             <div>
               {product.product_quantity <= 0 && (
-                <div className="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center">
-                  <p className="text-xl font-bold text-white uppercase">Out of Stock</p>
+                <div className="absolute inset-0 bg-gray-800 bg-opacity-70 flex items-center justify-center rounded-lg">
+                  <p className="text-lg font-semibold text-white tracking-wide">Out of Stock</p>
                 </div>
               )}
-              <p className="text-sm text-gray-600 mt-2 line-clamp-2">
+              <p className="text-sm text-gray-600 mt-4 line-clamp-2">
                 {product.product_description.length > 50
                   ? product.product_description.slice(0, 100) + '...'
                   : product.product_description}
