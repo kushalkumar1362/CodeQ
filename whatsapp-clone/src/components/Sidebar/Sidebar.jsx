@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setActive } from '../../redux/activeSlice';
 import {
@@ -31,9 +31,8 @@ const Sidebar = () => {
     dispatch(setActive(iconName));
   };
 
-
   return (
-    <div className="w-[65px] h-full bg-[#202C33] flex flex-col items-center justify-between py-3 gap-8 border-r border-[#8696A0]">
+    <div className="w-[65px] h-full bg-[#202C33] flex flex-col items-center justify-between py-3 gap-8 shadow-sm">
       <div className="flex flex-col items-center gap-3">
         {icons.map(({ name, Icon, ActiveIcon }) => (
           <div key={name}
