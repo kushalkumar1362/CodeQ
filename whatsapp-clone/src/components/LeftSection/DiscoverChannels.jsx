@@ -1,6 +1,6 @@
 import React from 'react';
 
-const RightSection = () => {
+const DiscoverChannels = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const RightSection = () => {
   );
 };
 
-export default RightSection;
+export default DiscoverChannels;
