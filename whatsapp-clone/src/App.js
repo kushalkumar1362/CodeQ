@@ -3,7 +3,7 @@ import Main from './components/Main';
 
 const App = () => {
   return (
-    <div className='mx-auto max-w-[1368px] w-screen h-screen bg-[#262524] font-sans text-[#fff]'>
+    <div className='w-screen h-screen bg-[#262524] font-sans text-[#fff]'>
       <Main />
     </div>
   );

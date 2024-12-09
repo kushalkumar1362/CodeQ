@@ -9,7 +9,6 @@ export const LightTooltip = styled(({ className, ...props }) => (
   [`& .${tooltipClasses.tooltip}`]: {
     backgroundColor: theme.palette.common.white,
     color: 'rgba(0, 0, 0, 0.87)',
-    boxShadow: theme.shadows[1],
     fontSize: 13,
     padding: '4px 16px',
     borderRadius: '50px',
@@ -23,11 +22,11 @@ export const HeaderTooltip = styled(({ className, ...props }) => (
   [`& .${tooltipClasses.tooltip}`]: {
     backgroundColor: '#313131',
     color: '#fff',
-    fontSize: 12,
-    padding: '8px 12px',
+    fontSize: 11,
+    padding: '3px 5px',
     border: '1px solid #fff',
     borderRadius: '0px',
-    FontFace: 'Poppins',
+    fontFamily: 'Segoe UI Symbol',
   },
 }));
 

@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setActive } from '../../redux/activeSlice';
+import { setActive } from '../../redux';
+
 import {
   ChatsIcon,
   ChatsIconActive,
