@@ -7,7 +7,6 @@ export const CustomMenu = styled((props) => {
   const theme = useTheme();
   return (
     <Menu
-
       {...props}
       TransitionComponent={Grow}
       TransitionProps={{ timeout: theme.transitions.duration.standard }}

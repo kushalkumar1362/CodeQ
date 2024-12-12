@@ -2,6 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { MenuIcon, SearchIcon, Chevron, PlusIcon } from '../../assets/LeftSection';
 import { VideoIcon, ExpressionIcon, MicIcon } from '../../assets/RightSection';
+// import { CustomMenu } from '../../utils/customMenu';
+// import { MenuItem } from '@mui/material';
 
 const ChatDetailsPage = () => {
   const activeChat = useSelector((state) => state.chats.activeChat);
@@ -11,6 +13,16 @@ const ChatDetailsPage = () => {
   const name = activeChat ? activeChat?.name : activeChannel?.name || '';
   const messages = activeChat ? activeChat?.messages : activeChannel?.messages || [];
   const unreadMessage = activeChat ? activeChat?.unreadCount : activeChannel?.unreadCount || 0;
+
+
+  // const [anchorEl, setAnchorEl] = useState(null);
+  // const open = Boolean(anchorEl);
+  // const handleClick = (event) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
+  // const handleClose = () => {
+  //   setAnchorEl(null);
+  // };
 
   const chatContainerRef = useRef(null);
 
@@ -55,7 +67,7 @@ const ChatDetailsPage = () => {
 
       <div
         ref={chatContainerRef}
-        className="flex-1 overflow-y-auto h-[calc(100vh-150px)] scrollbar-thin p-4 px-[72px]"
+        className="flex-1 overflow-y-auto h-[calc(100vh-150px)] scrollbar-thin p-4 px-[16px] md:px-[32px] lg:px-[72px]"
       >
         {messages.map((message, index) => (
           <div key={message.id}>
@@ -83,8 +95,32 @@ const ChatDetailsPage = () => {
 
       <div className="flex items-center justify-between py-1 px-2 bg-[#202C33] shadow-inner">
         <div className="px-4">
-          <PlusIcon color="#E9E4C5" height={30} width={30} cursor="pointer" />
+          <PlusIcon
+            color="#E9E4C5"
+            cursor={'pointer'}
+            width={30}
+            height={30}
+            // onClick={handleClick}
+            // className={`flex items-center justify-center p-2 w-12 h-12 rounded-full transform transition-transform ${anchorEl ? 'bg-[#2A3942] rotate-90' : 'rotate-0' }`
+            // }
+          />
+
+          {/* <CustomMenu
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            transformOrigin={{ horizontal: 'left', vertical: 'top' }}
+            anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+          >
+            <MenuItem onClick={handleClose}>New Group</MenuItem>
+            <MenuItem onClick={handleClose}>Starred messages</MenuItem>
+            <MenuItem onClick={handleClose}>Selected chats</MenuItem>
+            <MenuItem onClick={handleClose}>Logout</MenuItem>
+            <MenuItem onClick={handleClose}>Get WhatsApp for Windows</MenuItem>
+          </CustomMenu> */}
         </div>
+
+
         <div className="flex items-center justify-center w-full flex-row py-2 px-3 bg-[#2A3942] rounded-md gap-3">
           <ExpressionIcon color="#8696A0" height={26} width={26} cursor="pointer" />
           <input

@@ -143,7 +143,7 @@ const LeftSection = () => {
               />
               {search && (
                 <div>
-                  <CrossIcon color='#AEBAC1' onClick={() => setSearch('')}/>
+                  <CrossIcon color='#AEBAC1' onClick={() => setSearch('')} />
                 </div>
               )}
             </div>}
@@ -156,8 +156,7 @@ const LeftSection = () => {
                   setSearchPlaceholder("Search " + tab + " chats");
                   setFilterTab(tab)
                 }}
-                className={` py-1 text-[#AEBAC1] text-[15px] px-3 rounded-full
-                ${filterTab === tab ? 'bg-[#0A332C] text-[#01a683]' : 'bg-[#202C33] hover:bg-[#26353D]'}`
+                className={`py-1 text-[#AEBAC1] text-[15px] px-3 rounded-full  ${filterTab === tab ? 'bg-[#0A332C] text-[#01a683]' : 'bg-[#202C33] hover:bg-[#26353D]'}`
                 }
               >
                 {tab}

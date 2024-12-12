@@ -62,7 +62,7 @@ const ChatList = () => {
 
   return (
     <div className="scrollbar-thumb-[#202C33] scrollbar-track-[#111B21] shadow-lg">
-      <div className={`mt-2 overflow-y-auto scrollbar-thin ${active === 'chats' ? 'h-[calc(100vh-145px)]' : 'h-[calc(100vh-100px)]'}`}>
+      <div className={`mt-2 overflow-y-auto scrollbar-thin ${active === 'chats' ? 'h-[calc(100vh-150px)]' : 'h-[calc(100vh-100px)]'}`}>
         {(active === "chats" ? chats : channels).map((data, index) => (
           <div key={data.id} onClick={() => handleActive(data)}>
             <ChatCard data={data} index={index} chatsLength={(active === "chats" ? chats : channels).length} />

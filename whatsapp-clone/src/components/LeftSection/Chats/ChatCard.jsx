@@ -7,7 +7,7 @@ const ChatCard = ({ data, index, chatsLength }) => {
 
   return (
     <div className='hover:bg-[#2A3942]'>
-      <div className='flex items-center gap-3 py-2 px-4  cursor-pointer w-full'>
+      <div className='flex items-center gap-3 py-[10px] px-4  cursor-pointer w-full'>
         <img src={data.profilePicture} alt='' className='w-[48px] h-[48px] rounded-full' loading='lazy' />
         <div className='w-full flex flex-col items-center justify-center py-1 pl-3'>
 
@@ -32,7 +32,7 @@ const ChatCard = ({ data, index, chatsLength }) => {
 
       {index < chatsLength - 1 && <div className='w-[75%] mx-[22%] bg-[#2A3942] h-[1px]'>
       </div>}
-      {active === 'chats' && <div className='w-[75%] mx-[22%] bg-[#2A3942] h-[1px]'></div>}
+      {active === 'chats' && <div className='w-[75%] mx-[22%] bg-[#2A3942] h-[0px]'></div>}
     </div>
   );
 };

@@ -17,7 +17,7 @@ const RightSection = () => {
           <div className='flex flex-col items-center justify-center gap-7'>
             <p className='text-[#D1D6D8] text-[32px] leading-8 font-light'>Download WhatsApp for Windows</p>
             <p className='text-[#AEBAC1] text-center text-[14px]'>Make calls, share your screen and get a faster experience when you download the Windows app.</p>
-            <button className='bg-[#00A884] text-[#111b21] py-2 px-6 rounded-full hover:bg-[#06CF9C]'>
+            <button className='bg-[#00A884] text-[#111b21] py-2 px-6 rounded-full hover:bg-[#06CF9C] transition-all duration-200 ease-in-out'>
               <span className='text-[14px] font-medium'>Get From Microsoft Store</span>
             </button>
           </div>
@@ -27,7 +27,7 @@ const RightSection = () => {
           Your personal messages are end-to-end encrypted</p>
       </div>}
 
-      {(activeChat || activeChannel)   && <ChatDetailsPage />}
+      {(activeChat || activeChannel) && <ChatDetailsPage />}
     </>
   );
 };
